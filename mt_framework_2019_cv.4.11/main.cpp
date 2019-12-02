@@ -1,4 +1,4 @@
-// BlobDetection.cpp : Diese Datei enthÃ¤lt die Funktion "main". Hier beginnt und endet die AusfÃ¼hrung des Programms.
+// BlobDetection.cpp : Diese Datei enthält die Funktion "main". Hier beginnt und endet die Ausführung des Programms.
 //
 
 #include "Blob.h"
