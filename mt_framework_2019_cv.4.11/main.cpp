@@ -8,7 +8,7 @@ using namespace cv;
 
 static vector<Blob*> blobs;
 static unsigned int maxID = 0;
-TUIO::TuioServer* server = new TUIO::TuioServer();
+static TUIO::TuioServer* server = new TUIO::TuioServer();
 
 static String nearestNeighbour(Point currentCenter, int videoWidth, int videoHeight);
 static void calculateDistances(Point currentCenter);
@@ -30,8 +30,6 @@ int main(int argc, char** argv)
 
 		int videoWidth = subtrahend.cols;
 		int videoHeight = subtrahend.rows;
-
-		TUIO::TuioServer* server = new TUIO::TuioServer();
 
 		if (subtrahend.data)
 		{
