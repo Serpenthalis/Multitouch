@@ -29,6 +29,7 @@ private:
 	double distance;
 	bool active;
 	int lostFor;
+	TUIO::TuioCursor* cursor;
 
 public:
 	Blob();
@@ -43,4 +44,6 @@ public:
 	void setActive(bool);
 	int getLostFor(void);
 	void setLostFor(int);
+	TUIO::TuioCursor* getCursor(void);
+	void setCursor(TUIO::TuioCursor*);
 };

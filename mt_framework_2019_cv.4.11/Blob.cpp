@@ -63,3 +63,13 @@ void Blob::setLostFor(int lostFor)
 {
 	this->lostFor = lostFor;
 }
+
+TUIO::TuioCursor* Blob::getCursor(void)
+{
+	return cursor;
+}
+
+void Blob::setCursor(TUIO::TuioCursor* cursor)
+{
+	this->cursor = cursor;
+}
