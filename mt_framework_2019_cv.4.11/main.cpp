@@ -14,6 +14,7 @@ static void calculateDistances(Point currentCenter);
 static void reset();
 static void cleanUp(TUIO::TuioServer* server);
 static void sendTUIOevents(TUIO::TuioServer* server);
+static void tearDown(TUIO::TuioServer* server);
 
 int main(int argc, char** argv)
 {
@@ -99,6 +100,7 @@ int main(int argc, char** argv)
 							calculateDistances(rect.center);
 							String blobID = nearestNeighbour(rect.center, videoWidth, videoHeight, server);
 							putText(frame, blobID, rect.center, 0, TEXT_SIZE, Scalar(0, 255, 0));
+							sendTUIOevents(server);
 						}
 					}
 					cleanUp(server);
@@ -112,7 +114,7 @@ int main(int argc, char** argv)
 				}
 			}
 		}
-		blobs.clear();
+		tearDown(server);
 	}
 }
 
@@ -150,7 +152,6 @@ static String newBlob(Point currentCenter, int videoWidth, int videoHeight, TUIO
 	blob->setCursor(cursor);
 	server->addExternalTuioCursor(cursor);
 	blobs.push_back(blob);
-	sendTUIOevents(server);
 
 	return to_string(blob->getID());
 }
@@ -171,11 +172,9 @@ static String nearestNeighbour(Point currentCenter, int videoWidth, int videoHei
 			blobs.front()->setActive(true);
 			blobs.front()->setLostFor(0);
 
-			float normalizedWidth = currentCenter.x / videoWidth;
-			float normalizedHeight = currentCenter.y / videoHeight;
-			blobs.front()->getCursor()->getPosition().update(normalizedWidth, normalizedHeight);
-			server->updateExternalTuioCursor(blobs.front()->getCursor());
-			sendTUIOevents(server);
+			float normalizedWidth = currentCenter.x / float(videoWidth);
+			float normalizedHeight = currentCenter.y / float(videoHeight);
+			server->updateTuioCursor(blobs.front()->getCursor(), normalizedWidth, normalizedHeight);
 
 			return to_string(blobs.front()->getID());
 		}
@@ -214,11 +213,11 @@ static void cleanUp(TUIO::TuioServer* server)
 		//Is the blob lost?
 		if (blobs.at(i)->getActive() == false)
 		{
+			server->removeExternalTuioCursor(blobs.at(i)->getCursor());
+
 			//If the blob is lost for too long
 			if (blobs.at(i)->getLostFor() > BLOB_LOST_TOLERANCE)
 			{
-				server->removeExternalTuioCursor(blobs.at(i)->getCursor());
-				sendTUIOevents(server);
 				blobs.erase(blobs.begin() + i);
 				i--;
 			}
@@ -228,4 +227,15 @@ static void cleanUp(TUIO::TuioServer* server)
 			}
 		}
 	}
+}
+
+//Remove all cursors before clearing the the blob vector
+static void tearDown(TUIO::TuioServer* server)
+{
+	for (unsigned int i = 0; i < blobs.size(); i++)
+	{
+		server->removeExternalTuioCursor(blobs.at(i)->getCursor());
+	}
+	sendTUIOevents(server);
+	blobs.clear();
 }
