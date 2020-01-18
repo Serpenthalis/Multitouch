@@ -91,7 +91,7 @@
       <SDLCheck>
       </SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(OPENCV_DIR)\..\..\include;..\TUIO;..\oscpack</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OPENCV_DIR)\..\..\include;..\TUIO;..\oscpack;..\ip</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -141,14 +141,26 @@
     <ClCompile Include="..\oscpack\ip\win32\NetworkingUtils.cpp" />
     <ClCompile Include="..\oscpack\ip\win32\UdpSocket.cpp" />
     <ClCompile Include="..\oscpack\osc\OscOutboundPacketStream.cpp" />
+    <ClCompile Include="..\oscpack\osc\OscReceivedElements.cpp" />
     <ClCompile Include="..\oscpack\osc\OscTypes.cpp" />
+    <ClCompile Include="..\TUIO\TuioClient.cpp" />
     <ClCompile Include="..\TUIO\TuioServer.cpp" />
     <ClCompile Include="..\TUIO\TuioTime.cpp" />
-    <ClCompile Include="Blob.cpp" />
+    <ClCompile Include="EventListener.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Blob.h" />
+    <ClInclude Include="..\oscpack\ip\PacketListener.h" />
+    <ClInclude Include="..\oscpack\ip\TimerListener.h" />
+    <ClInclude Include="..\oscpack\ip\UdpSocket.h" />
+    <ClInclude Include="..\TUIO\TuioContainer.h" />
+    <ClInclude Include="..\TUIO\TuioCursor.h" />
+    <ClInclude Include="..\TUIO\TuioListener.h" />
+    <ClInclude Include="..\TUIO\TuioObject.h" />
+    <ClInclude Include="..\TUIO\TuioPoint.h" />
+    <ClInclude Include="..\TUIO\TuioServer.h" />
+    <ClInclude Include="..\TUIO\TuioTime.h" />
+    <ClInclude Include="EventListener.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
