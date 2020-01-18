@@ -20,7 +20,8 @@ using namespace TUIO;
 class EventListener : public TuioListener
 {
 private:
-	int testy;
+	vector<TuioCursor*> tuioCursors;
+	vector<TuioObject*> tuioObjects;
 
 public:
 	EventListener();

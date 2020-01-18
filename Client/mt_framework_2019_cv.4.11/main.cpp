@@ -9,5 +9,4 @@ int main(int argc, char** argv)
 	TuioClient client(3333);
 	client.addTuioListener(&myClient);
 	client.connect(true);
-	cout << "Jup";
 }
